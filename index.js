@@ -28,7 +28,8 @@ program
         {
           type: 'input',
           name: 'todo',
-          message: 'What\'s your wish?'
+          message: 'What\'s your wish?',
+          validate: value => value ? true : 'It doesn\'t be empty'
         }
       ])
     }
