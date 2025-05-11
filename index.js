@@ -3,6 +3,8 @@ const program = require('commander')
 const { join } = require('path')
 const fs = require('fs')
 const inquirer = require('inquirer')
+const chalk = require('chalk')
+
 const pkg = require('./package.json')
 const tdsPath = join(__dirname, 'todo.json')
 
@@ -39,5 +41,6 @@ program
       done: false
     })    
     saveJsn(tdsPath, data)
+    console.log(`${chalk.green('Task has been added successfully!')}`)
   })
 program.parse(process.argv)
