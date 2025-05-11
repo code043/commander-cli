@@ -4,6 +4,7 @@ const { join } = require('path')
 const fs = require('fs')
 const inquirer = require('inquirer')
 const chalk = require('chalk')
+const Table = require('cli-table')
 
 const pkg = require('./package.json')
 const tdsPath = join(__dirname, 'todo.json')
@@ -18,6 +19,17 @@ const getJsn = (path) => {
 }
 
 const saveJsn = (path, data) => fs.writeFileSync(path, JSON.stringify(data, null, 2))
+
+const showTaskTable = (data) => {
+  const table = new Table({
+    head: ['id', 'to-do', 'status'],
+    colWidths: [10, 20, 10]
+  })
+  data.map((item, index) => {
+    table.push([index, item.title, item.done ? chalk.green('done') : 'pending'])
+  })
+  console.log(table.toString())
+}
 
 program.version(pkg.version)
 program
@@ -43,5 +55,13 @@ program
     })    
     saveJsn(tdsPath, data)
     console.log(`${chalk.green('Task has been added successfully!')}`)
+  })
+program
+  .command('list') 
+  .description('List all tasks')
+  .action(() => {
+    const data = getJsn(tdsPath)
+    showTaskTable(data)
+    
   })
 program.parse(process.argv)
