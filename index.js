@@ -23,7 +23,8 @@ program.version(pkg.version)
 program
   .command('add [todo]')
   .description('Add a task')
-  .action(async (todo) => {
+  .option('-s, --status [status]', 'Initial status of task')
+  .action(async (todo, options) => {
     let anwers;
     if(!todo){
       anwers = await inquirer.prompt([
@@ -38,7 +39,7 @@ program
     const data = getJsn(tdsPath)
     data.push({
       title: todo || anwers.todo,
-      done: false
+      done: (options.status === 'true') || false
     })    
     saveJsn(tdsPath, data)
     console.log(`${chalk.green('Task has been added successfully!')}`)
