@@ -61,6 +61,7 @@ program
   })
 program
   .command('find <id>')
+  .alias('fd')
   .description('Find a task by ID')
   .action((id) => {
     const data = getJsn(tdsPath)
@@ -78,6 +79,7 @@ program
   })
 program
   .command('edit <id>')
+  .alias('e')
   .description('Edit the text of a task')
   .action(async (id) => {
     const data = getJsn(tdsPath)
@@ -101,6 +103,7 @@ program
   })
 program
   .command('delete <id>')
+  .alias('del')
   .description('Delete a task')
   .action(async (id) => {
     const data = getJsn(tdsPath)
@@ -129,6 +132,7 @@ program
 
 program
   .command('do <todo>')
+  .alias('d')
   .description('Mark a task as done')
   .action(async (todo) => {
     let anwers;
@@ -151,6 +155,7 @@ program
   })
 program
   .command('undo <todo>')
+  .alias('u')
   .description('Mark a task as undone')
   .action(async (todo) => {
     let anwers;
@@ -174,6 +179,7 @@ program
   })
 program
   .command('filter')
+  .alias('ft')
   .description('Filter tasks by status (done or pending)')
   .option('-s, --status <status>', 'Task status: done or pending')
   .action((options) => {
@@ -199,6 +205,7 @@ program
 
 program
   .command('list') 
+  .alias('l')
   .description('List all tasks')
   .action(() => {
     const data = getJsn(tdsPath)
