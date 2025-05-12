@@ -1,15 +1,23 @@
 #!/usr/bin/env node
-const program = require('commander')
-const { join } = require('path')
-const fs = require('fs')
-const inquirer = require('inquirer')
-const chalk = require('chalk')
-const Table = require('cli-table')
-const shell = require('shelljs')
-const figlet = require('figlet')
+import { Command } from 'commander'
+import { join, dirname } from 'path'
+import fs from 'fs'
+import inquirer from 'inquirer'
+import chalk from 'chalk'
+import Table from 'cli-table'
+import shell from 'shelljs'
+import figlet from 'figlet'
+import { createRequire } from 'module'
+import { fileURLToPath } from 'url'
 
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+
+const require = createRequire(import.meta.url)
 const pkg = require('./package.json')
 const tdsPath = join(__dirname, 'todo.json')
+
+const program = new Command()
 
 const getJsn = (path) => {
   const data = fs.existsSync(path) ? fs.readFileSync(path) : []
