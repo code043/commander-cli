@@ -76,6 +76,29 @@ program
     table.push([id, task.title, task.done ? chalk.green('done') : 'pending'])
     console.log(table.toString())
   })
+program
+  .command('edit <id>')
+  .description('Edit the text of a task')
+  .action(async (id) => {
+    const data = getJsn(tdsPath)
+    const task = data[id]
+    if (!task) {
+      console.log(chalk.red('Task not found!'))
+      return
+    }
+    const answer = await inquirer.prompt([
+      {
+        type: 'input',
+        name: 'newText',
+        message: 'Enter new text:',
+        default: task.title
+      }
+    ])
+    task.title = answer.newText
+    saveJsn(tdsPath, data)
+    console.log(chalk.green('Task updated!'))
+    showTaskTable(data)
+  })
 
 program
   .command('do <todo>')
