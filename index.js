@@ -172,8 +172,30 @@ program
     showTaskTable(data)
 
   })
+program
+  .command('filter')
+  .description('Filter tasks by status (done or pending)')
+  .option('-s, --status <status>', 'Task status: done or pending')
+  .action((options) => {
+    const data = getJsn(tdsPath)
+    const status = options.status
 
+    if (!status || !['done', 'pending'].includes(status)) {
+      console.log(chalk.red('Please provide a valid status: "done" or "pending"'))
+      return
+    }
 
+    const filtered = data.filter(task => {
+      return status === 'done' ? task.done : !task.done
+    })
+
+    if (filtered.length === 0) {
+      console.log(chalk.yellow('No tasks found with this status.'))
+      return
+    }
+
+    showTaskTable(filtered)
+  })
 
 program
   .command('list') 
