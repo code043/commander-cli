@@ -65,7 +65,13 @@ program
   .description('Find a task by ID')
   .action((id) => {
     const data = getJsn(tdsPath)
-    const task = data[id]
+    const todoId = parseInt(id)
+
+    if (isNaN(todoId) || todoId < 0 || todoId >= data.length) {
+      console.log(chalk.red('Task ID not found.'))
+      return
+    }
+    const task = data[todoId]
     if (!task) {
       console.log(chalk.red('Task not found!'))
       return
@@ -74,7 +80,7 @@ program
       head: ['id', 'to-do', 'status'],
       colWidths: [10, 20, 10]
     })
-    table.push([id, task.title, task.done ? chalk.green('done') : 'pending'])
+    table.push([todoId, task.title, task.done ? chalk.green('done') : 'pending'])
     console.log(table.toString())
   })
 program
@@ -83,7 +89,13 @@ program
   .description('Edit the text of a task')
   .action(async (id) => {
     const data = getJsn(tdsPath)
-    const task = data[id]
+    const todoId = parseInt(id)
+
+    if (isNaN(todoId) || todoId < 0 || todoId >= data.length) {
+      console.log(chalk.red('Task ID not found.'))
+      return
+    }
+    const task = data[todoId]
     if (!task) {
       console.log(chalk.red('Task not found!'))
       return
@@ -107,7 +119,13 @@ program
   .description('Delete a task')
   .action(async (id) => {
     const data = getJsn(tdsPath)
-    const task = data[id]
+    const todoId = parseInt(id)
+
+    if (isNaN(todoId) || todoId < 0 || todoId >= data.length) {
+      console.log(chalk.red('Task ID not found.'))
+      return
+    }
+    const task = data[todoId]
     if (!task) {
       console.log(chalk.red('Task not found!'))
       return
@@ -121,7 +139,7 @@ program
       }
     ])
     if (confirm.sure) {
-      data.splice(id, 1)
+      data.splice(todoId, 1)
       saveJsn(tdsPath, data)
       console.log(chalk.green('Task deleted!'))
       showTaskTable(data)
@@ -180,23 +198,23 @@ program
 program
   .command('filter')
   .alias('ft')
-  .description('Filter tasks by status (done or pending)')
-  .option('-s, --status <status>', 'Task status: done or pending')
+  .description('Filter tasks by status')
+  .option('-s, --status <status>', 'Status of task: "done" or "pending"')
   .action((options) => {
-    const data = getJsn(tdsPath)
     const status = options.status
 
-    if (!status || !['done', 'pending'].includes(status)) {
-      console.log(chalk.red('Please provide a valid status: "done" or "pending"'))
+    if (!status || !['done', 'pending'].includes(status.toLowerCase())) {
+      console.log(chalk.red('Please provide a valid status: "done" or "pending".'))
       return
     }
 
-    const filtered = data.filter(task => {
-      return status === 'done' ? task.done : !task.done
-    })
+    const data = getJsn(tdsPath)
+    const isDone = status.toLowerCase() === 'done'
+
+    const filtered = data.filter(task => task.done === isDone)
 
     if (filtered.length === 0) {
-      console.log(chalk.yellow('No tasks found with this status.'))
+      console.log(chalk.yellow(`No tasks found with status "${status}".`))
       return
     }
 
