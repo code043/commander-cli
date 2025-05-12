@@ -99,6 +99,33 @@ program
     console.log(chalk.green('Task updated!'))
     showTaskTable(data)
   })
+program
+  .command('delete <id>')
+  .description('Delete a task')
+  .action(async (id) => {
+    const data = getJsn(tdsPath)
+    const task = data[id]
+    if (!task) {
+      console.log(chalk.red('Task not found!'))
+      return
+    }
+    const confirm = await inquirer.prompt([
+      {
+        type: 'confirm',
+        name: 'sure',
+        message: `Are you sure you want to delete "${task.title}"?`,
+        default: false
+      }
+    ])
+    if (confirm.sure) {
+      data.splice(id, 1)
+      saveJsn(tdsPath, data)
+      console.log(chalk.green('Task deleted!'))
+      showTaskTable(data)
+    } else {
+      console.log(chalk.yellow('Operation cancelled.'))
+    }
+  })
 
 program
   .command('do <todo>')
