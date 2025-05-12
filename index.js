@@ -5,9 +5,10 @@ const fs = require('fs')
 const inquirer = require('inquirer')
 const chalk = require('chalk')
 const Table = require('cli-table')
+const shell = require('shelljs')
+const figlet = require('figlet')
 
 const pkg = require('./package.json')
-const { type } = require('os')
 const tdsPath = join(__dirname, 'todo.json')
 
 const getJsn = (path) => {
@@ -33,6 +34,7 @@ const showTaskTable = (data) => {
 }
 
 program.version(pkg.version)
+console.log(chalk.cyan(figlet.textSync('Code043 CLI')))
 program
   .command('add [todo]')
   .description('Add a task')
@@ -68,7 +70,7 @@ program
           type: 'input',
           name: 'todo',
           message: 'What\'s id of task?',
-          validate: value => value !== undefined ? true : 'Difiny task id'
+          validate: value => value !== undefined ? true : 'Definy task id'
         }
       ])
           
@@ -90,7 +92,7 @@ program
           type: 'input',
           name: 'todo',
           message: 'What\s task id',
-          validate: value => value ? true : 'Difiny task id'
+          validate: value => value ? true : 'Definy task id'
 
         }
       ])
@@ -112,5 +114,18 @@ program
     const data = getJsn(tdsPath)
     showTaskTable(data)
     
+  })
+program 
+  .command('backup')
+  .description('Backup all tasks')
+  .action(() =>{
+    shell.mkdir('-p', 'backup')
+    const command = shell.exec('mv ./todos.json ./backup/todos.json', { silent: true })
+    if(!command.code){
+      console.log(chalk.green('Backup has been successfully!'))
+    }else{
+      console.log(command.stderr)
+      console.log(chalk.red('Backup failed!'))
+    }
   })
 program.parse(process.argv)
