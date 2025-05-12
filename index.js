@@ -60,6 +60,24 @@ program
     console.log(`${chalk.green('Task has been added successfully!')}`)
   })
 program
+  .command('find <id>')
+  .description('Find a task by ID')
+  .action((id) => {
+    const data = getJsn(tdsPath)
+    const task = data[id]
+    if (!task) {
+      console.log(chalk.red('Task not found!'))
+      return
+    }
+    const table = new Table({
+      head: ['id', 'to-do', 'status'],
+      colWidths: [10, 20, 10]
+    })
+    table.push([id, task.title, task.done ? chalk.green('done') : 'pending'])
+    console.log(table.toString())
+  })
+
+program
   .command('do <todo>')
   .description('Mark a task as done')
   .action(async (todo) => {
