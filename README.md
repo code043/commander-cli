@@ -41,3 +41,7 @@ CLI made with CommanderJs
 - **Git:**
   - **Install:** https://git-scm.com/downloads
   - **Documantation**: https://git-scm.com/doc
+
+## Preview
+
+![Screenshot do app](assets/preview.png)
