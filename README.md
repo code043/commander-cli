@@ -16,7 +16,7 @@ CLI made with CommanderJs
 
 ###
 
-    cd commander-cli.git
+    cd commander-cli
 
 ###
 
