@@ -10,6 +10,25 @@ CLI made with CommanderJs
 - Node
 - Git
 
+### Run the project:
+
+    git clone https://github.com/code043/commander-cli.git
+
+###
+
+    cd commander-cli.git
+
+###
+
+    npm install
+
+###
+
+    npm link
+###
+
+    todo --help
+
 
 ## Resources
 
