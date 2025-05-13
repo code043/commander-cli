@@ -29,6 +29,10 @@ CLI made with CommanderJs
 
     todo --help
 
+## Preview
+
+![Screenshot do app](assets/preview.png)
+
 
 ## Resources
 
@@ -42,6 +46,4 @@ CLI made with CommanderJs
   - **Install:** https://git-scm.com/downloads
   - **Documantation**: https://git-scm.com/doc
 
-## Preview
 
-![Screenshot do app](assets/preview.png)
