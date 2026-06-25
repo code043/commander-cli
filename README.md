@@ -2,6 +2,10 @@
 
 CLI made with CommanderJs
 
+## Preview
+
+![Screenshot do app](assets/preview.png)
+
 ## initializing
 
 ### Requirements:
@@ -29,9 +33,7 @@ CLI made with CommanderJs
 
     todo --help
 
-## Preview
 
-![Screenshot do app](assets/preview.png)
 
 
 ## Resources
