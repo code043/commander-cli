@@ -6,15 +6,15 @@ CLI made with CommanderJs
 
 ![Screenshot do app](assets/preview.png)
 
-## initializing
+# initializing
 
-### Requirements:
+### Requirements
 
 - Vscode
 - Node
 - Git
 
-### Run the project:
+### Run the project
 
     git clone https://github.com/code043/commander-cli.git
 
@@ -32,8 +32,6 @@ CLI made with CommanderJs
 ###
 
     todo --help
-
-
 
 
 ## Resources
